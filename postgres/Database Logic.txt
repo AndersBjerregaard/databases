@@ -1,0 +1,85 @@
+CREATE TABLE Constraints (
+   ID SERIAL PRIMARY KEY,
+   Name varchar(255) NOT NULL,
+   Variety varchar(255) NOT NULL
+);
+
+CREATE TABLE Materials (
+   ID SERIAL PRIMARY KEY,
+   Name varchar(255) NOT NULL,
+   Price double precision NOT NULL,
+);
+
+CREATE TABLE Materials_Constraints (
+   Material_ID SERIAL,
+   Constraint_ID SERIAL,
+   PRIMARY KEY (Material_ID, Constraint_ID),
+   CONSTRAINT FK_Material
+      FOREIGN KEY(Material_ID)
+         REFERENCES Materials(ID),
+   CONSTRAINT FK_Constraint
+      FOREIGN KEY(Constraint_ID)
+         REFERENCES Constraints(ID)
+);
+
+CREATE TABLE PizzaSizes (
+   ID SERIAL PRIMARY KEY,
+   Volume varchar(255) NOT NULL,
+   PriceMultiplier double precision NOT NULL,
+   ProductionMultiplier double precision NOT NULL
+);
+
+CREATE TABLE PizzaStyles (
+   ID SERIAL PRIMARY KEY,
+   Name varchar(255) NOT NULL,
+   PriceMultiplier double precision NOT NULL,
+   ProductionMultiplier double precision NOT NULL
+);
+
+CREATE TABLE Pizzas (
+   ID SERIAL PRIMARY KEY,
+   Name varchar(255) NOT NULL,
+   ProductionTime double precision NOT NULL,
+   Price double precision NOT NULL,
+   PizzaSize_ID SERIAL,
+   PizzaStyle_ID SERIAL,
+   CONSTRAINT FK_PizzaSize
+      FOREIGN KEY(PizzaSize_ID)
+         REFERENCES PizzaSizes(ID),
+   CONSTRAINT FK_PizzaStyle
+      FOREIGN KEY(PizzaStyle_ID)
+         REFERENCES PizzaStyles(ID)
+);
+
+CREATE TABLE Pizzas_Materials (
+   Pizza_ID SERIAL,
+   Material_ID SERIAL,
+   Quantity int NOT NULL,
+   PRIMARY KEY (Pizza_ID, Material_ID),
+   CONSTRAINT FK_Pizza
+      FOREIGN KEY(Pizza_ID)
+         REFERENCES Pizzas(ID),
+   CONSTRAINT FK_Material
+      FOREIGN KEY(Material_ID)
+         REFERENCES Materials(ID)
+);
+
+CREATE TABLE Orders (
+   ID SERIAL PRIMARY KEY,
+   TotalPrice double precision NOT NULL,
+   TotalProductionTime double precision NOT NULL
+);
+
+CREATE TABLE Pizzas_Orders (
+   Order_ID SERIAL,
+   Pizza_ID SERIAL,
+   Amount int NOT NULL,
+   CalculatedPrice double precision NOT NULL,
+   PRIMARY KEY (Pizza_ID, Order_ID),
+   CONSTRAINT FK_Pizza
+      FOREIGN KEY(Pizza_ID)
+         REFERENCES Pizzas(ID),
+   CONSTRAINT FK_Order
+      FOREIGN KEY(Order_ID)
+         REFERENCES Orders(ID)
+);

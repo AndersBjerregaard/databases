@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  mssql1:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: unless-stopped
+    ports:
+      - 1433:1433
+    environment:
+      ACCEPT_EULA: y
+      SA_PASSWORD: Ladida.12
+    volumes:
+      - ./data:/var/opt/mssql/data
+  adminer:
+    image: adminer:latest
+    restart: unless-stopped
+    ports:
+      - 8082:8080
