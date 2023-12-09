@@ -1,3 +1,5 @@
+Big shoutout to Marcel Dempers. As this example is heavily inspired by his work and magnificent documentation: https://github.com/marcel-dempers/docker-development-youtube-series/tree/master/storage/databases/postgresql/3-replication
+
 # Replication
 
 *Working directory should be in https://github.com/AndersBjerregaard/databases/tree/master/postgres/replication*
